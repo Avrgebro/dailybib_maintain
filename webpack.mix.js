@@ -13,3 +13,15 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
+
+mix.webpackConfig({
+    resolve: {
+      extensions: ['.js', '.json', '.vue'],
+      alias: {
+        '@': path.join(__dirname, './resources/js')
+      }
+    },
+    output: {
+      chunkFilename: 'js/[name].[chunkhash].js',
+    }
+  })
