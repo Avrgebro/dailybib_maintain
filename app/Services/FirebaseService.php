@@ -23,27 +23,52 @@ class FirebaseService{
             
             dump($docRef);
 
-            $verses_chunk = Verse::where('book_id', $book_id)->orderBy('book_id', 'asc')->chunk(100, function ($verses) use ($docRef, $book, $db){
-                //$batch = $db->batch();
-                $verses_ref = $docRef->collection('verses');
-                dump($verses_ref);
-                $verses_mapped = collect($verses)->map(function ($verse) use ($docRef, $verses_ref){
+            $verses = Verse::where('book_id', $book_id)->orderBy('book_id', 'asc')->get()->toArray();
 
-                    $verses_ref->add([
-                        'book_id' => $verse->book_id,
-                        'book_reference' => $docRef->id(),
-                        'chapter' => $verse->chapter,
-                        'verse' => $verse->verse,
-                        'text' => $verse->text
+            $verses_grouped = array_group_by($verses, "chapter");
+
+            //dump($verses_grouped);
+
+            collect($verses_grouped)->map(function($chapter) use ($docRef){
+                $chapterRef = $docRef->collection('chapters')->add([
+                    'id' => $chapter[0]['chapter'],
+                ]);
+
+                dump($chapter[0]['chapter']);
+
+                $versesRef = $chapterRef->collection('verses');
+
+                collect($chapter)->map(function($verse) use ($versesRef){
+                    $versesRef->add([
+                        'verse' => $verse['verse'],
+                        'text' => $verse['text']
                     ]);
-
-                    return $verse;
-                })->all();
-
-                //dump($batch);
-                //$batch->commit();
-                
+                });
             });
+
+            // $verses_chunk = Verse::where('book_id', $book_id)->orderBy('book_id', 'asc')->chunk(3000, function ($verses) use ($docRef, $book, $db){
+            //     //$batch = $db->batch();
+            //     $verses_ref = $docRef->collection('verses');
+            //     dump($verses_ref);
+            //     $verses_mapped = collect($verses)->map(function ($verse) use ($docRef, $verses_ref){
+
+            //         $verses_ref->add([
+            //             'book_id' => $verse->book_id,
+            //             'book_reference' => $docRef->id(),
+            //             'chapter' => $verse->chapter,
+            //             'verse' => $verse->verse,
+            //             'text' => $verse->text
+            //         ]);
+
+            //         return $verse;
+            //     })->all();
+
+            //     //dump($batch);
+            //     //$batch->commit();
+                
+            // });
+
+
         } catch (\Exception $e){
             return [
                 'status' => 'error',

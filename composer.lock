@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "902e0bdc8b6e3e78e7baa0e033111002",
+    "content-hash": "b793e649b45e3a7cb84fc3d712b8915c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1604,6 +1604,45 @@
             ],
             "description": "Mime-type detection for Flysystem",
             "time": "2021-01-18T20:58:21+00:00"
+        },
+        {
+            "name": "mcaskill/php-array-group-by",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://gist.github.com/mcaskill/baaee44487653e1afc0d",
+                "reference": "20aa76bbc63c0a83448db7d7b93af8006a5bb56f"
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "Function.Array-Group-By.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chauncey McAskill",
+                    "email": "chauncey@mcaskill.ca",
+                    "homepage": "https://github.com/mcaskill"
+                }
+            ],
+            "description": "Groups an array by a given key.",
+            "keywords": [
+                "function"
+            ],
+            "time": "2017-11-24T13:45:55+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6498,5 +6537,6 @@
     "platform": {
         "php": "^7.2.5|^8.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
